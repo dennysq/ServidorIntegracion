@@ -25,7 +25,7 @@ public class CuentaRQ implements Cuerpo {
 
     @Override
     public boolean validate(String input) {
-        return input.length() == 15;
+        return input.length() == 13;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class CuentaRQ implements Cuerpo {
         if (validate(input)) {
             try {
 
-                String values[] = MyStringUtil.splitByFixedLengths(input, new int[]{11, 4});
+                String values[] = MyStringUtil.splitByFixedLengths(input, new int[]{11, 2});
                 this.cuentaCliente = values[0];
                 this.tipoCuenta = values[1];
 
@@ -56,7 +56,7 @@ public class CuentaRQ implements Cuerpo {
     }
 
     public void setTipoCuenta(String tipoCuenta) {
-        this.tipoCuenta = StringUtils.rightPad(tipoCuenta, 4);
+        this.tipoCuenta = StringUtils.rightPad(tipoCuenta, 2);
     }
 
 }

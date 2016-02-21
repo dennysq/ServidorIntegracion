@@ -61,7 +61,7 @@ public class MyInitialContext {
             ex.printStackTrace();
         } 
     }
-    private void close_context() {
+    public void close_context() {
         if (ctx != null) {
             try {
                 ctx.close();
