@@ -6,31 +6,48 @@
 package com.teamj.distribuidas.integracion.protocolo.transaccion;
 
 import com.teamj.distribuidas.integracion.protocolo.Cuerpo;
+import com.teamj.distribuidas.integracion.util.MyStringUtil;
 import java.math.BigDecimal;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author LuisAlberto
  */
-public class DepositoRQ implements Cuerpo{
+public class DepositoRQ implements Cuerpo {
+
     private String numeroCuenta;
-    private int tipoCuenta;
-    private BigDecimal valorDeposito;
+    private String tipoCuenta;
+    private String valorDeposito;
     private String documentoCliente;
     private String fechaDeposito;
 
     @Override
     public String asTexto() {
-        return this.numeroCuenta+this.tipoCuenta+this.valorDeposito+this.documentoCliente+this.fechaDeposito;
+        return this.numeroCuenta + this.tipoCuenta + this.valorDeposito + this.documentoCliente + this.fechaDeposito;
     }
+
     @Override
     public boolean validate(String input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return input.length() == 64;
     }
 
     @Override
     public void build(String input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (validate(input)) {
+            try {
+
+                String values[] = MyStringUtil.splitByFixedLengths(input, new int[]{11, 5, 10, 15, 23});
+                this.numeroCuenta = values[0];
+                this.tipoCuenta = values[1];
+                this.valorDeposito = values[2];
+                this.documentoCliente = values[3];
+                this.fechaDeposito = values[4];
+
+            } catch (Exception e) {
+                System.out.println("" + e);
+            }
+        }
     }
 
     public String getNumeroCuenta() {
@@ -38,23 +55,23 @@ public class DepositoRQ implements Cuerpo{
     }
 
     public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
+        this.numeroCuenta = StringUtils.rightPad(numeroCuenta, 11);
     }
 
-    public int getTipoCuenta() {
+    public String getTipoCuenta() {
         return tipoCuenta;
     }
 
-    public void setTipoCuenta(int tipoCuenta) {
-        this.tipoCuenta = tipoCuenta;
+    public void setTipoCuenta(String tipoCuenta) {
+        this.tipoCuenta = StringUtils.rightPad(tipoCuenta, 5);
     }
 
-    public BigDecimal getValorDeposito() {
+    public String getValorDeposito() {
         return valorDeposito;
     }
 
-    public void setValorDeposito(BigDecimal valorDeposito) {
-        this.valorDeposito = valorDeposito;
+    public void setValorDeposito(String valorDeposito) {
+        this.valorDeposito = StringUtils.rightPad(valorDeposito, 10);
     }
 
     public String getDocumentoCliente() {
@@ -62,17 +79,15 @@ public class DepositoRQ implements Cuerpo{
     }
 
     public void setDocumentoCliente(String documentoCliente) {
-        this.documentoCliente = documentoCliente;
+        this.documentoCliente = StringUtils.rightPad(documentoCliente, 15);
     }
-    
+
     public String getFechaDeposito() {
         return fechaDeposito;
     }
 
     public void setFechaDeposito(String fechaDeposito) {
-        this.fechaDeposito = fechaDeposito;
+        this.fechaDeposito = StringUtils.rightPad(fechaDeposito, 23);
     }
 
-    
-    
 }

@@ -6,6 +6,7 @@
 package com.teamj.distribuidas.integracion.protocolo.consulta;
 
 import com.teamj.distribuidas.integracion.protocolo.Cuerpo;
+import com.teamj.distribuidas.integracion.util.MyStringUtil;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -24,12 +25,22 @@ public class CuentaRQ implements Cuerpo {
 
     @Override
     public boolean validate(String input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return input.length() == 15;
     }
 
     @Override
     public void build(String input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (validate(input)) {
+            try {
+
+                String values[] = MyStringUtil.splitByFixedLengths(input, new int[]{11, 4});
+                this.cuentaCliente = values[0];
+                this.tipoCuenta = values[1];
+
+            } catch (Exception e) {
+                System.out.println("" + e);
+            }
+        }
     }
 
     public String getCuentaCliente() {

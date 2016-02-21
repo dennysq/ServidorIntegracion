@@ -14,10 +14,18 @@ import com.teamj.distribuidas.integracion.protocolo.Cuerpo;
 public class CuentaRS implements Cuerpo {
 
     private String message;
+    private String identificacion;
+    private String nombre;
+    private String tipoCuenta;
+    private String saldoActual;
 
     @Override
     public String asTexto() {
-        return this.message;
+        if (this.message != null && this.message.equals("OK")) {
+            return this.message + this.identificacion + this.nombre + this.tipoCuenta + this.saldoActual;
+        } else {
+            return this.message;
+        }
     }
 
     @Override
@@ -29,7 +37,7 @@ public class CuentaRS implements Cuerpo {
     public void build(String input) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     public String getMessage() {
         return message;
     }
