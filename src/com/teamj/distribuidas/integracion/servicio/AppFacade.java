@@ -46,7 +46,7 @@ public class AppFacade {
         ctx.openConection();
         CuentaServicioInterface bean;
         try {
-            bean= (CuentaServicioInterface) ctx.getCtx().lookup("java:global/CoreBancario-ear/CoreBancario-ejb-1/EmpleadoServicioRemote!com.teamj.distribuidas.corebancario.services.remote.EmpleadoServicioInterface");
+            bean= (CuentaServicioInterface) ctx.getCtx().lookup("java:global/CoreBancario-ear/CoreBancario-ejb-1/CuentaServicioRemote!com.teamj.distribuidas.corebancario.services.remote.CuentaServicioInterface");
             return bean.obtenerCuenta(cuenta, tipoCuenta);
         } catch (NamingException ex) {
             Logger.getLogger(AppFacade.class.getName()).log(Level.SEVERE, null, ex);
