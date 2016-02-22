@@ -39,7 +39,7 @@ public class CuentaRS implements Cuerpo {
 
     @Override
     public boolean validate(String input) {
-        return input.length() >= 2 && input.length() <= 167;
+        return input.length() >= 2 && input.length() <= 168;
     }
 
     @Override
