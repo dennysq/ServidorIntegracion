@@ -9,9 +9,12 @@ package com.teamj.distribuidas.integracion.server;
  *
  * @author RAUL
  */
+import com.teamj.distribuidas.corebancario.model.Cuenta;
 import com.teamj.distribuidas.integracion.protocolo.Mensaje;
 import com.teamj.distribuidas.integracion.protocolo.MensajeRQ;
 import com.teamj.distribuidas.integracion.protocolo.MensajeRS;
+import com.teamj.distribuidas.integracion.protocolo.consulta.CuentaRQ;
+import com.teamj.distribuidas.integracion.protocolo.consulta.CuentaRS;
 import com.teamj.distribuidas.integracion.protocolo.seguridad.AutenticacionRQ;
 import com.teamj.distribuidas.integracion.protocolo.seguridad.AutenticacionRS;
 import com.teamj.distribuidas.integracion.servicio.AppFacade;
@@ -67,6 +70,18 @@ public class AppSocketSession extends Thread {
                         }
 
                         mensajeRS.setCuerpo(autRS);
+                        output.write(mensajeRS.asTexto() + "\n");
+                        output.flush();
+                    }
+                    if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_CONSULTACUENTA)) {
+                        CuentaRQ cue = (CuentaRQ) msj.getCuerpo();
+                        Cuenta response = AppFacade.obtenerCuenta(cue.getCuentaCliente(), cue.getTipoCuenta());
+
+                        MensajeRS mensajeRS = new MensajeRS("appserver", Mensaje.ID_MENSAJE_CONSULTACUENTA);
+                        CuentaRS cueRS = new CuentaRS();
+                        cueRS.setCuenta(response);
+                        
+                        mensajeRS.setCuerpo(cueRS);
                         output.write(mensajeRS.asTexto() + "\n");
                         output.flush();
                     }
