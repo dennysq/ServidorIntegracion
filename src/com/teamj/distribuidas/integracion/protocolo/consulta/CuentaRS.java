@@ -38,7 +38,7 @@ public class CuentaRS implements Cuerpo {
 
     @Override
     public boolean validate(String input) {
-        return input.length() >= 1 && input.length() <= 17;
+        return input.length() >= 1 && input.length() <= 14;
     }
 
     @Override
@@ -46,10 +46,10 @@ public class CuentaRS implements Cuerpo {
         if (validate(input)) {
             
                 if (input.length() < 17) {
-                    input = StringUtils.rightPad(input, 17);
+                    input = StringUtils.rightPad(input, 14);
                 }
             try {    
-                String cuentaValues[] = MyStringUtil.splitByFixedLengths(input, new int[]{2, 5, 10});
+                String cuentaValues[] = MyStringUtil.splitByFixedLengths(input, new int[]{2, 2, 10});
                 this.message= cuentaValues[0];
                 this.cuenta = new Cuenta();
                 this.cuenta.setTipo(cuentaValues[1]); 
