@@ -6,6 +6,7 @@
 package com.teamj.distribuidas.integracion.protocolo.transaccion;
 
 import com.teamj.distribuidas.integracion.protocolo.Cuerpo;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -22,12 +23,17 @@ public class RetiroRS implements Cuerpo {
 
     @Override
     public boolean validate(String input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return input != null && input.length() >= 1 && input.length() <= 2;
     }
 
     @Override
     public void build(String input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (validate(input)) {
+            if (input.length() < 2) {
+                input = StringUtils.rightPad(input, 2);
+            }
+            this.message = input;
+        }
     }
 
     public String getMessage() {
