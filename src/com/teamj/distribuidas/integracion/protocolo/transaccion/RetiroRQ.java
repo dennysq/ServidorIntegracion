@@ -29,7 +29,7 @@ public class RetiroRQ implements Cuerpo {
 
     @Override
     public boolean validate(String input) {
-        return input.length() == 64;
+        return input.length() == 52;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class RetiroRQ implements Cuerpo {
         if (validate(input)) {
             try {
 
-                String values[] = MyStringUtil.splitByFixedLengths(input, new int[]{11, 5, 10, 15, 14});
+                String values[] = MyStringUtil.splitByFixedLengths(input, new int[]{11, 2, 10, 15, 14});
                 this.numeroCuenta = values[0];
                 this.tipoCuenta = values[1];
                 this.valorRetiro = values[2];
@@ -51,7 +51,7 @@ public class RetiroRQ implements Cuerpo {
     }
 
     public String getNumeroCuenta() {
-        return numeroCuenta;
+        return numeroCuenta.trim();
     }
 
     public void setNumeroCuenta(String numeroCuenta) {
@@ -59,11 +59,11 @@ public class RetiroRQ implements Cuerpo {
     }
 
     public String getTipoCuenta() {
-        return tipoCuenta;
+        return tipoCuenta.trim();
     }
 
     public void setTipoCuenta(String tipoCuenta) {
-        this.tipoCuenta = StringUtils.rightPad(tipoCuenta, 5);
+        this.tipoCuenta = StringUtils.rightPad(tipoCuenta, 2);
     }
 
     public String getValorRetiro() {
@@ -71,11 +71,11 @@ public class RetiroRQ implements Cuerpo {
     }
 
     public void setValorRetiro(String valorRetiro) {
-        this.valorRetiro = StringUtils.rightPad(valorRetiro, 10);
+        this.valorRetiro = StringUtils.leftPad(valorRetiro, 10, "0");
     }
 
     public String getDocumentoCliente() {
-        return documentoCliente;
+        return documentoCliente.trim();
     }
 
     public void setDocumentoCliente(String documentoCliente) {
