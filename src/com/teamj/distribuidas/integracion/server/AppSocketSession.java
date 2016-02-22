@@ -19,6 +19,8 @@ import com.teamj.distribuidas.integracion.protocolo.seguridad.AutenticacionRQ;
 import com.teamj.distribuidas.integracion.protocolo.seguridad.AutenticacionRS;
 import com.teamj.distribuidas.integracion.protocolo.transaccion.DepositoRQ;
 import com.teamj.distribuidas.integracion.protocolo.transaccion.DepositoRS;
+import com.teamj.distribuidas.integracion.protocolo.transaccion.RetiroRQ;
+import com.teamj.distribuidas.integracion.protocolo.transaccion.RetiroRS;
 import com.teamj.distribuidas.integracion.servicio.AppFacade;
 
 import java.io.BufferedReader;
@@ -92,15 +94,32 @@ public class AppSocketSession extends Thread {
                         boolean response = AppFacade.registrarDeposito(dep.getNumeroCuenta(), dep.getTipoCuenta(), dep.getValorDeposito(), dep.getFechaDeposito());
 
                         MensajeRS mensajeRS = new MensajeRS("appserver", Mensaje.ID_MENSAJE_DEPOSITO);
-                        DepositoRS autRS = new DepositoRS();
+                        DepositoRS depRS = new DepositoRS();
                         if (response) {
-                            autRS.setMessage("OK");
+                            depRS.setMessage("OK");
                             
                         } else {
-                            autRS.setMessage("BA");
+                            depRS.setMessage("BA");
                         }
 
-                        mensajeRS.setCuerpo(autRS);
+                        mensajeRS.setCuerpo(depRS);
+                        output.write(mensajeRS.asTexto() + "\n");
+                        output.flush();
+                    }
+                    if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_RETIRO)) {
+                        RetiroRQ dep = (RetiroRQ) msj.getCuerpo();
+                        boolean response = AppFacade.registrarRetiro(dep.getNumeroCuenta(), dep.getTipoCuenta(), dep.getValorRetiro(), dep.getFechaRetiro());
+
+                        MensajeRS mensajeRS = new MensajeRS("appserver", Mensaje.ID_MENSAJE_RETIRO);
+                        RetiroRS retRS = new RetiroRS();
+                        if (response) {
+                            retRS.setMessage("OK");
+                            
+                        } else {
+                            retRS.setMessage("BA");
+                        }
+
+                        mensajeRS.setCuerpo(retRS);
                         output.write(mensajeRS.asTexto() + "\n");
                         output.flush();
                     }
