@@ -64,7 +64,7 @@ public class AppSocketSession extends Thread {
                         AutenticacionRS autRS = new AutenticacionRS();
                         if (response) {
                             autRS.setMessage("OK");
-                            
+
                         } else {
                             autRS.setMessage("BA");
                         }
@@ -75,26 +75,34 @@ public class AppSocketSession extends Thread {
                     }
                     if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_CONSULTACUENTA)) {
                         CuentaRQ cue = (CuentaRQ) msj.getCuerpo();
-                        Cuenta response = AppFacade.obtenerCuenta(cue.getCuentaCliente(), cue.getTipoCuenta());
 
+                        Cuenta response = AppFacade.obtenerCuenta(cue.getCuentaCliente(), cue.getTipoCuenta());
                         MensajeRS mensajeRS = new MensajeRS("appserver", Mensaje.ID_MENSAJE_CONSULTACUENTA);
+
                         CuentaRS cueRS = new CuentaRS();
-                        cueRS.setCuenta(response);
-                        
+                        if (response != null) {
+                            cueRS.setMessage("OK");
+                            cueRS.setIdentificacion(response.getCliente().getIdentificacion());
+                            cueRS.setNombre(response.getCliente().getNombre() + " " + response.getCliente().getApellido());
+                            cueRS.setNumeroCuenta(response.getNumero());
+                            cueRS.setSaldoActual(response.getSaldo().toPlainString());
+                            cueRS.setTipoCuenta(response.getTipo());
+                        } else {
+                            cueRS.setMessage("BA");
+                        }
                         mensajeRS.setCuerpo(cueRS);
                         output.write(mensajeRS.asTexto() + "\n");
                         output.flush();
                     }
-                }
-                else {
+                } else {
                     output.write(Mensaje.ID_MENSAJE_FALLOBUILD + "\n");
                     output.flush();
                 }
 
             }
             socket.close();
-            
-        }catch (Exception e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error: " + e);
         }
