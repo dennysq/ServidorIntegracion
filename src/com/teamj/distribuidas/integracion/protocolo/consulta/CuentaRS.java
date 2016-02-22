@@ -5,7 +5,13 @@
  */
 package com.teamj.distribuidas.integracion.protocolo.consulta;
 
+import com.teamj.distribuidas.corebancario.model.Cuenta;
 import com.teamj.distribuidas.integracion.protocolo.Cuerpo;
+import com.teamj.distribuidas.integracion.util.MyStringUtil;
+import java.math.BigDecimal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -14,10 +20,12 @@ import com.teamj.distribuidas.integracion.protocolo.Cuerpo;
 public class CuentaRS implements Cuerpo {
 
     private String message;
-    private String identificacion;
-    private String nombre;
     private String tipoCuenta;
     private String saldoActual;
+    private String identificacion;
+    private String nombre;
+    private Cuenta cuenta;
+    
 
     @Override
     public String asTexto() {
@@ -30,13 +38,27 @@ public class CuentaRS implements Cuerpo {
 
     @Override
     public boolean validate(String input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return input.length() >= 1 && input.length() <= 445;
     }
 
     @Override
     public void build(String input) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        if (validate(input)) {
+            
+                if (input.length() < 17) {
+                    input = StringUtils.rightPad(input, 17);
+                }
+            try {    
+                String cuentaValues[] = MyStringUtil.splitByFixedLengths(input, new int[]{2, 5, 10});
+                this.message= cuentaValues[0];
+                this.cuenta = new Cuenta();
+                this.cuenta.setTipo(cuentaValues[1]); 
+                this.cuenta.setSaldo(new BigDecimal(cuentaValues[2]));
+            } catch (Exception ex) {
+                Logger.getLogger(CuentaRS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+}
 
     public String getMessage() {
         return message;
@@ -46,4 +68,43 @@ public class CuentaRS implements Cuerpo {
         this.message = message;
     }
 
+    public String getTipoCuenta() {
+        return tipoCuenta;
+    }
+
+    public void setTipoCuenta(String tipoCuenta) {
+        this.tipoCuenta = tipoCuenta;
+    }
+
+    public String getSaldoActual() {
+        return saldoActual;
+    }
+
+    public void setSaldoActual(String saldoActual) {
+        this.saldoActual = saldoActual;
+    }
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
+    }
 }

@@ -20,11 +20,11 @@ public class RetiroRQ implements Cuerpo {
     private String tipoCuenta;
     private String valorRetiro;
     private String documentoCliente;
-    private String fechaDeposito;
+    private String fechaRetiro;
 
     @Override
     public String asTexto() {
-        return this.numeroCuenta + this.tipoCuenta + this.valorRetiro + this.documentoCliente + this.fechaDeposito;
+        return this.numeroCuenta + this.tipoCuenta + this.valorRetiro + this.documentoCliente + this.fechaRetiro;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class RetiroRQ implements Cuerpo {
                 this.tipoCuenta = values[1];
                 this.valorRetiro = values[2];
                 this.documentoCliente = values[3];
-                this.fechaDeposito = values[4];
+                this.fechaRetiro = values[4];
 
             } catch (Exception e) {
                 System.out.println("" + e);
@@ -82,12 +82,12 @@ public class RetiroRQ implements Cuerpo {
         this.documentoCliente = StringUtils.rightPad(documentoCliente, 15);
     }
 
-    public String getFechaDeposito() {
-        return fechaDeposito;
+    public String getFechaRetiro() {
+        return fechaRetiro;
     }
 
-    public void setFechaDeposito(String fechaDeposito) {
-        this.fechaDeposito = StringUtils.rightPad(fechaDeposito, 23);
+    public void setFechaDeposito(String fechaRetiro) {
+        this.fechaRetiro = StringUtils.rightPad(fechaRetiro, 23);
     }
 
 }
