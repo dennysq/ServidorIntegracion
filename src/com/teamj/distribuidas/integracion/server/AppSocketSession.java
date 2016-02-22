@@ -17,6 +17,8 @@ import com.teamj.distribuidas.integracion.protocolo.consulta.CuentaRQ;
 import com.teamj.distribuidas.integracion.protocolo.consulta.CuentaRS;
 import com.teamj.distribuidas.integracion.protocolo.seguridad.AutenticacionRQ;
 import com.teamj.distribuidas.integracion.protocolo.seguridad.AutenticacionRS;
+import com.teamj.distribuidas.integracion.protocolo.transaccion.DepositoRQ;
+import com.teamj.distribuidas.integracion.protocolo.transaccion.DepositoRS;
 import com.teamj.distribuidas.integracion.servicio.AppFacade;
 
 import java.io.BufferedReader;
@@ -82,6 +84,23 @@ public class AppSocketSession extends Thread {
                         cueRS.setCuenta(response);
                         
                         mensajeRS.setCuerpo(cueRS);
+                        output.write(mensajeRS.asTexto() + "\n");
+                        output.flush();
+                    }
+                    if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_DEPOSITO)) {
+                        DepositoRQ dep = (DepositoRQ) msj.getCuerpo();
+                        boolean response = AppFacade.registrarDeposito(dep.getNumeroCuenta(), dep.getTipoCuenta(), dep.getValorDeposito(), dep.getFechaDeposito());
+
+                        MensajeRS mensajeRS = new MensajeRS("appserver", Mensaje.ID_MENSAJE_DEPOSITO);
+                        DepositoRS autRS = new DepositoRS();
+                        if (response) {
+                            autRS.setMessage("OK");
+                            
+                        } else {
+                            autRS.setMessage("BA");
+                        }
+
+                        mensajeRS.setCuerpo(autRS);
                         output.write(mensajeRS.asTexto() + "\n");
                         output.flush();
                     }
