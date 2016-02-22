@@ -33,9 +33,9 @@ public class CuentaRQ implements Cuerpo {
         if (validate(input)) {
             try {
 
-                String values[] = MyStringUtil.splitByFixedLengths(input, new int[]{11, 2});
-                this.cuentaCliente = values[0];
-                this.tipoCuenta = values[1];
+                String values[] = MyStringUtil.splitByFixedLengths(input, new int[]{2, 11});
+                this.tipoCuenta = values[0];
+                this.cuentaCliente = values[1];
 
             } catch (Exception e) {
                 System.out.println("" + e);
@@ -44,7 +44,7 @@ public class CuentaRQ implements Cuerpo {
     }
 
     public String getCuentaCliente() {
-        return cuentaCliente;
+        return cuentaCliente.trim();
     }
 
     public void setCuentaCliente(String cuentaCliente) {
@@ -52,7 +52,7 @@ public class CuentaRQ implements Cuerpo {
     }
 
     public String getTipoCuenta() {
-        return tipoCuenta;
+        return tipoCuenta.trim();
     }
 
     public void setTipoCuenta(String tipoCuenta) {

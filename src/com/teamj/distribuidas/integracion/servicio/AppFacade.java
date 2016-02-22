@@ -24,7 +24,7 @@ public class AppFacade {
 
     public static boolean getAuthentication(String user, String password) {
         MyInitialContext ctx = new MyInitialContext();
-        ctx.setIp("192.168.1.115");
+        //ctx.setIp("192.168.1.115");
         ctx.openConection();
 
         EmpleadoServicioInterface bean;
@@ -33,28 +33,27 @@ public class AppFacade {
             return bean.login(user, password);
         } catch (NamingException ex) {
             Logger.getLogger(AppFacade.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{
+        } finally {
             ctx.close_context();
         }
         return false;
     }
-    
-    public static Cuenta obtenerCuenta(String cuenta, String tipoCuenta){
+
+    public static Cuenta obtenerCuenta(String cuenta, String tipoCuenta) {
         MyInitialContext ctx = new MyInitialContext();
-        ctx.setIp("192.168.1.115");
+        //  ctx.setIp("192.168.1.115");
         ctx.openConection();
         CuentaServicioInterface bean;
+        Cuenta c = null;
         try {
-            bean= (CuentaServicioInterface) ctx.getCtx().lookup("java:global/CoreBancario-ear/CoreBancario-ejb-1/CuentaServicioRemote!com.teamj.distribuidas.corebancario.services.remote.CuentaServicioInterface");
-            return bean.obtenerCuenta(cuenta, tipoCuenta);
+            bean = (CuentaServicioInterface) ctx.getCtx().lookup("java:global/CoreBancario-ear/CoreBancario-ejb-1/CuentaServicioRemote!com.teamj.distribuidas.corebancario.services.remote.CuentaServicioInterface");
+            c = bean.obtenerCuenta(cuenta, tipoCuenta);
         } catch (NamingException ex) {
             Logger.getLogger(AppFacade.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{
+        } finally {
             ctx.close_context();
         }
-        return null;
+        return c;
     }
 
 //    public static Boolean insernewclient(String id, String nombre, String telefono, String direccion)
