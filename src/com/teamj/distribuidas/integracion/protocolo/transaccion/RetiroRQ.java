@@ -37,7 +37,7 @@ public class RetiroRQ implements Cuerpo {
         if (validate(input)) {
             try {
 
-                String values[] = MyStringUtil.splitByFixedLengths(input, new int[]{11, 5, 10, 15, 23});
+                String values[] = MyStringUtil.splitByFixedLengths(input, new int[]{11, 5, 10, 15, 14});
                 this.numeroCuenta = values[0];
                 this.tipoCuenta = values[1];
                 this.valorRetiro = values[2];
@@ -86,8 +86,8 @@ public class RetiroRQ implements Cuerpo {
         return fechaRetiro;
     }
 
-    public void setFechaDeposito(String fechaRetiro) {
-        this.fechaRetiro = StringUtils.rightPad(fechaRetiro, 23);
+    public void setFechaRetiro(String fechaRetiro) {
+        this.fechaRetiro = StringUtils.rightPad(fechaRetiro, 14);
     }
 
 }

@@ -10,6 +10,7 @@ import com.teamj.distribuidas.corebancario.model.Empleado;
 import com.teamj.distribuidas.corebancario.services.remote.EmpleadoServicioInterface;
 import com.teamj.distribuidas.corebancario.services.remote.CuentaServicioInterface;
 import com.teamj.distribuidas.integracion.server.MyInitialContext;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -55,6 +56,41 @@ public class AppFacade {
         }
         return c;
     }
+    
+    public static boolean registrarDeposito(String numeroCuenta, String tipoCuenta, String monto, String fechaDeposito) {
+        MyInitialContext ctx = new MyInitialContext();
+        //ctx.setIp("192.168.1.115");
+        ctx.openConection();
+
+        CuentaServicioInterface bean;
+        try {
+            bean = (CuentaServicioInterface) ctx.getCtx().lookup("java:global/CoreBancario-ear/CoreBancario-ejb-1/CuentaServicioRemote!com.teamj.distribuidas.corebancario.services.remote.CuentaServicioInterface");
+            return bean.deposito(numeroCuenta, tipoCuenta, monto, fechaDeposito);
+        } catch (NamingException ex) {
+            Logger.getLogger(AppFacade.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ctx.close_context();
+        }
+        return false;
+    }
+    public static boolean registrarRetiro(String numeroCuenta, String tipoCuenta, String monto, String fechaRetiro) {
+        MyInitialContext ctx = new MyInitialContext();
+        //ctx.setIp("192.168.1.115");
+        ctx.openConection();
+
+        CuentaServicioInterface bean;
+        try {
+            bean = (CuentaServicioInterface) ctx.getCtx().lookup("java:global/CoreBancario-ear/CoreBancario-ejb-1/CuentaServicioRemote!com.teamj.distribuidas.corebancario.services.remote.CuentaServicioInterface");
+            return bean.retiro(numeroCuenta, tipoCuenta, monto, fechaRetiro);
+        } catch (NamingException ex) {
+            Logger.getLogger(AppFacade.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ctx.close_context();
+        }
+        return false;
+    }
+    
+    
 
 //    public static Boolean insernewclient(String id, String nombre, String telefono, String direccion)
 //    {
