@@ -30,7 +30,7 @@ public class CuentaRS implements Cuerpo {
     @Override
     public String asTexto() {
         if (this.message != null && this.message.equals("OK")) {
-            return this.message + this.identificacion + this.nombre + this.tipoCuenta + this.saldoActual;
+            return this.message + this.tipoCuenta + this.saldoActual;
         } else {
             return this.message;
         }
