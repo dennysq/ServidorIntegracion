@@ -56,12 +56,12 @@ public class CuentaRS implements Cuerpo {
                     this.nombre = cuentaValues[5];
 
                     this.cuenta = new Cuenta();
-                    this.cuenta.setNumero(numeroCuenta);
+                    this.cuenta.setNumero(getNumeroCuenta());
                     this.cuenta.setSaldo(new BigDecimal(saldoActual));
-                    this.cuenta.setTipo(tipoCuenta);
+                    this.cuenta.setTipo(getTipoCuenta());
                     Cliente cliente = new Cliente();
-                    cliente.setNombre(nombre);
-                    cliente.setIdentificacion(identificacion);
+                    cliente.setNombre(getNombre());
+                    cliente.setIdentificacion(getIdentificacion());
                     this.cuenta.setCliente(cliente);
                 } catch (Exception ex) {
                     Logger.getLogger(CuentaRS.class.getName()).log(Level.SEVERE, null, ex);
