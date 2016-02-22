@@ -54,13 +54,21 @@ public class MensajeRS extends Mensaje {
                             break;
                         case ID_MENSAJE_DEPOSITO:
                             DepositoRS depositoRS = new DepositoRS();
-                            depositoRS.build(cuerpo);
-                            this.cuerpo = depositoRS;
+                            if (depositoRS.validate(cuerpo)) {
+                                depositoRS.build(cuerpo);
+                                this.cuerpo = depositoRS;
+                            } else {
+                                result = false;
+                            }
                             break;
                         case ID_MENSAJE_RETIRO:
                             RetiroRS retiroRS = new RetiroRS();
-                            retiroRS.build(cuerpo);
-                            this.cuerpo = retiroRS;
+                            if (retiroRS.validate(cuerpo)) {
+                                retiroRS.build(cuerpo);
+                                this.cuerpo = retiroRS;
+                            } else {
+                                result = false;
+                            }
                             break;
                         default:
                             result = false;
