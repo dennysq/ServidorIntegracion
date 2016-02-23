@@ -18,7 +18,7 @@ public class MyInitialContext {
     private static final MyInitialContext instance= new MyInitialContext();
     private InitialContext ctx = null;
     
-    private String ip= "127.0.0.1";
+    private String ip= "192.168.3.120";
     private String port="3700";
 
     public String getIp() {
