@@ -25,7 +25,7 @@ public class AppFacade {
 
     public static boolean getAuthentication(String user, String password) {
         MyInitialContext ctx = new MyInitialContext();
-        //ctx.setIp("192.168.1.115");
+        ctx.setIp("192.168.3.120");
         ctx.openConection();
 
         EmpleadoServicioInterface bean;
@@ -42,7 +42,7 @@ public class AppFacade {
 
     public static Cuenta obtenerCuenta(String cuenta, String tipoCuenta) {
         MyInitialContext ctx = new MyInitialContext();
-        //  ctx.setIp("192.168.1.115");
+        ctx.setIp("192.168.3.120");
         ctx.openConection();
         CuentaServicioInterface bean;
         Cuenta c = null;
@@ -59,7 +59,7 @@ public class AppFacade {
     
     public static boolean registrarDeposito(String numeroCuenta, String tipoCuenta, String monto, String fechaDeposito) {
         MyInitialContext ctx = new MyInitialContext();
-        //ctx.setIp("192.168.1.115");
+        ctx.setIp("192.168.3.120");
         ctx.openConection();
 
         CuentaServicioInterface bean;
@@ -75,7 +75,7 @@ public class AppFacade {
     }
     public static boolean registrarRetiro(String numeroCuenta, String tipoCuenta, String monto, String fechaRetiro) {
         MyInitialContext ctx = new MyInitialContext();
-        //ctx.setIp("192.168.1.115");
+        ctx.setIp("192.168.3.120");
         ctx.openConection();
 
         CuentaServicioInterface bean;
